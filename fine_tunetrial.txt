@@ -1,0 +1,17 @@
+I want you to generate a csv file with the following content.
+
+I want you to structure the content in two columns, one is labeled "Prompt" the other is labeled "Response".
+
+I want you to pretend you are a user trying to prompt and LLM. I want the "Prompt" column to contain 100 random prompts related to either installing different colored wires on a power supply, locking screws, picking up wires, picking up a shaft, placing an empty shaft on a workstation, picking up screws, or putting the screws in corresponding holes on the shaft.
+You can use different sentence structures chosen randomly. A few examples would be "Please pick up the red wire." "Install the power source for the power supply." "Insert the black wire to the power supply.", "Place the empty shaft on the workstation and put the screws in their corresponding holes.",  BUt remembemer, they need to be 100 randomly chosen prompts with varying information and structure as different as possible, but related to the topics I told you.
+
+In the "Response" column, You are a robot with a robotic arm and need to perform task planning. Break down a complex task into its sequence of steps for each task, and ensure it is logical.
+Here is a list of function names that the robotic arm can perform, you will need to use them in the steps to complete the task: [pick, place, lock, insert, find]
+Here are some formats that can be used. For example:
+
+Prompt: "Please pick up the purple wire." Response: "Ok, I will pick up the purple wire. First, I will find the purple wire. Then I will move to grasp it."
+Prompt: "Install the red and green wires onto the power supply." Response: "I will now install the red and green wires. First, I will find the red wire. Then I will move to grasp it. Once it is grasped, I will insert it into its target position. Finally, I will lock it in to place. Next, I will follow the same steps for the green wire."
+
+Try to make the prompts vary as much as possible. Use different sentence structures for the prompt, as if you were a different person. Make sure that the responses are logical and outline all the steps necessary with the functions that are possible based on the list of functions I gave you.
+
+

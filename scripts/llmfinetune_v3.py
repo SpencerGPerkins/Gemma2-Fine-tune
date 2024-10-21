@@ -64,7 +64,7 @@ lora_config = LoraConfig(
 model = get_peft_model(model, lora_config)
 
 # Load dataset
-df = pd.read_csv('task_prompt_nlres.csv')
+df = pd.read_csv('../data/task_prompts1021.csv')
 dataset = Dataset.from_pandas(df)
 split_dataset = dataset.train_test_split(test_size=0.1)
 split_dataset['train'] = split_dataset['train'].shuffle(seed=42)
@@ -75,8 +75,8 @@ processed_dataset = split_dataset.map(preprocess_function, batched=True)
 tokenized_datasets = processed_dataset.remove_columns(["Prompt", "Response"])
 tokenized_datasets.set_format("torch")
 
-small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(87))
-small_eval_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(10))
+small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(72))
+small_eval_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(8))
 
 train_dataloader = DataLoader(small_train_dataset, shuffle=True, batch_size=1)
 eval_dataloader = DataLoader(small_eval_dataset, batch_size=1)
