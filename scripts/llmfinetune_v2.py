@@ -12,6 +12,9 @@ from tqdm.auto import tqdm
 import numpy as np
 import evaluate
 
+# Access the token from the environment variable
+hf_token = os.getenv("HF_TOKEN")
+
 def preprocess_function(examples):
     # inputs = examples['input']
     # targets = examples['output']
@@ -50,7 +53,7 @@ def exact_match_metric(eval_pred):
 
 
 
-tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b", use_fast=False, token='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') #maybe you can try 2b first
+tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b", use_fast=False, token=hf_token) 
 # os.environ['CUDA_LAUNCH_BLOCKING'] = 1
 model = AutoModelForCausalLM.from_pretrained(
     "google/gemma-2-2b",

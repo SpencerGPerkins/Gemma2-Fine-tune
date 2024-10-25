@@ -14,6 +14,9 @@ import evaluate
 from sentence_transformers import SentenceTransformer, util
 from sklearn.metrics.pairwise import cosine_similarity
 
+# Access the token from the environment variable
+hf_token = os.getenv("HF_TOKEN")
+
 def preprocess_function(examples):
     inputs = examples['Prompt']
     targets = examples['Response']
@@ -43,14 +46,16 @@ def token_level_accuracy_metric(preds, labels):
     return token_accuracy
 
 # Load tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b", use_fast=False, token='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')
+tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b", use_fast=False, token=hf_token)
 model = AutoModelForCausalLM.from_pretrained(
     "google/gemma-2-2b",
     device_map="auto"
 )
 
+
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-model.to(device)
+print(f"DEVICE USED : {device}")
+# model.to(device)
 
 # Load LoRA config and apply to the model
 target_modules = ["q_proj", "v_proj"]
@@ -86,7 +91,7 @@ metric = evaluate.load("accuracy")
 
 # Optimizer and training setup
 optimizer = AdamW(model.parameters(), lr=5e-5)
-num_epochs = 50
+num_epochs = 100
 num_training_steps = num_epochs * len(train_dataloader)
 lr_scheduler = get_scheduler(
     name="linear", optimizer=optimizer, num_warmup_steps=0, num_training_steps=num_training_steps
@@ -166,6 +171,6 @@ eval_metrics_df = pd.DataFrame({
     'Token_Accuracy': epoch_total_token_acc
 })
 
-eval_metrics_df.to_csv('evaluation_results/long_form_response.csv')
+eval_metrics_df.to_csv('../evaluation_results/long_form_response.csv')
 
 print(f'\nFinished traingin: {num_epochs} epochs completed.\n------------DONE-----------')
